@@ -1,14 +1,18 @@
+*
+{
+    font-family: 'Karla', sans-serif;
+}
+body
+{
+    background-color: rgb(37, 37, 37);
+}
+
 .grid
 {
     display: grid;
     grid-template-columns: 130px 130px 130px;
     margin: 0 auto;
     row-gap: 10px;
-}
-
-#game
-{
-    background-color: rgb(121, 121, 121);
 }
 
 .squar-grid
@@ -27,11 +31,17 @@
 
 .small-square
 {
-    border: 1px solid black;
+    border: 1px solid #4e4e4e;
     height: 50px;
     width: 50px;
+    /* transition: background-color 0.5s; */
     /* padding: 10px; */
 }
+
+/* .small-square:hover
+{
+    background-color: #383838;
+} */
 
 .container
 {
@@ -46,7 +56,7 @@ header
     margin-bottom: 10px;
 }
 
-.container-index
+.column
 {
     display: flex;
     flex-direction: column;
@@ -54,4 +64,73 @@ header
     padding-left: 45%;
     padding-right: 45%;
     margin-top: 10px;
+}
+
+.row
+{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+#room-id
+{
+    color: rgb(173, 173, 139);
+    font-weight: bold;
+    font-size: large;
+}
+
+#create-room
+{
+    padding-left: 110px;
+    padding-right: 110px;
+}
+
+#game-title
+{
+    margin-bottom: 50px;
+    font-size: xx-large;
+}
+
+span
+{
+    text-align: center;
+    color: rgb(155, 155, 155);
+}
+
+input, button
+{
+    font-size: large;
+}
+
+input
+{
+    background-color: rgb(37, 37, 37);
+    border:1px solid #999999;
+    color: #919191;
+}
+
+
+.button {
+	background-color:transparent;
+	border:1px solid #999999;
+	display:inline-block;
+	cursor:pointer;
+	color:#919191;
+	font-family:Arial;
+	font-size:17px;
+	padding:10px 36px;
+	text-decoration:none;
+}
+.button:hover {
+	background-color:transparent;
+}
+.button:active {
+	position:relative;
+	top:1px;
+}
+
+#spanA, #spanB, #spanC, #spanD, #spanE, #spanF, #spanG, #spanH, #spanI
+{
+    color: rgb(37, 37, 37);
 }

@@ -5,86 +5,108 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="style.css"/>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Karla:wght@200&display=swap" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <title>4 Squares</title>
 </head>
 <body>
     <header>
-        <span>4 Squares</span>
-        ||
+        <span id="game-title">4 Squares</span>
+        <br>
         <span id="room-id"></span>
+        <br>
+        <span id="winner"></span>
     </header>
     <div class="container">
         <div class="grid" id="game">
-            <div class='big-square squar-grid'>
+            <div id="A" class='big-square squar-grid'>
                 <div class='small-square' id="a1"></div>
                 <div class='small-square' id="a2"></div>
                 <div class='small-square' id="a3"></div>
                 <div class='small-square' id="a4"></div>
+                <span id="spanA">4</span>
+                <span id="sqaure-color"></span>
             </div>
 
-            <div class='big-square squar-grid'>
+            <div id="B" class='big-square squar-grid'>
                 <div class='small-square' id="b1"></div>
                 <div class='small-square' id="b2"></div>
                 <div class='small-square' id="b3"></div>
                 <div class='small-square' id="b4"></div>
+                <span id="spanB">4</span>
+                <span id="sqaure-color"></span>
             </div>
 
-            <div class='big-square squar-grid'>
-                <div class='small-square' id="b1"></div>
-                <div class='small-square' id="b2"></div>
-                <div class='small-square' id="b3"></div>
-                <div class='small-square' id="b4"></div>
+            <div id="I" class='big-square squar-grid'>
+                <div class='small-square' id="i1"></div>
+                <div class='small-square' id="i2"></div>
+                <div class='small-square' id="i3"></div>
+                <div class='small-square' id="i4"></div>
+                <span id="spanI">4</span>
             </div>
 
-            <div class='big-square squar-grid'>
+            <div id="C" class='big-square squar-grid'>
                 <div class='small-square' id="c1"></div>
                 <div class='small-square' id="c2"></div>
                 <div class='small-square' id="c3"></div>
                 <div class='small-square' id="c4"></div>
+                <span id="spanC">4</span>
             </div>
 
-            <div class='big-square squar-grid'>
+            <div id="D" class='big-square squar-grid'>
                 <div class='small-square' id="d1"></div>
                 <div class='small-square' id="d2"></div>
                 <div class='small-square' id="d3"></div>
                 <div class='small-square' id="d4"></div>
+                <span id="spanD">4</span>
             </div>
 
-            <div class='big-square squar-grid'>
+            <div id="E" class='big-square squar-grid'>
                 <div class='small-square' id="e1"></div>
                 <div class='small-square' id="e2"></div>
                 <div class='small-square' id="e3"></div>
                 <div class='small-square' id="e4"></div>
+                <span id="spanE">4</span>
             </div>
 
-            <div class='big-square squar-grid'>
+            <div id="F" class='big-square squar-grid'>
                 <div class='small-square' id="f1"></div>
                 <div class='small-square' id="f2"></div>
                 <div class='small-square' id="f3"></div>
                 <div class='small-square' id="f4"></div>
+                <span id="spanF">4</span>
             </div>
 
-            <div class='big-square squar-grid'>
+            <div id="G" class='big-square squar-grid'>
                 <div class='small-square' id="g1"></div>
                 <div class='small-square' id="g2"></div>
                 <div class='small-square' id="g3"></div>
                 <div class='small-square' id="g4"></div>
+                <span id="spanG">4</span>
             </div>
 
-            <div class='big-square squar-grid'>
+            <div id="H" class='big-square squar-grid'>
                 <div class='small-square' id="h1"></div>
                 <div class='small-square' id="h2"></div>
                 <div class='small-square' id="h3"></div>
                 <div class='small-square' id="h4"></div>
+                <span id="spanH">4</span>
             </div>
         </div>
 
     </div>
 
-    <div class="container-index">
-        <input id="user-room-id" type="text" placeholder="type room code ..">
-        <button>Join</button>
+    <div id="join-and-create" class="column">
+        <div class="row">
+            <input id="user-room-id" type="text" placeholder="type room code ..">
+            <div class="button" id="join-room">Join</div>
+        </div>
+        <span>Or</span>
+        <div class="row">
+            <div class="button" id="create-room">Create Room</div>
+        </div>
     </div>
 
     <script src="/socket.io/socket.io.js"></script>
