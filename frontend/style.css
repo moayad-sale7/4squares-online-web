@@ -2,6 +2,7 @@
 {
     font-family: 'Karla', sans-serif;
 }
+
 body
 {
     background-color: rgb(37, 37, 37);
@@ -15,7 +16,7 @@ body
     row-gap: 10px;
 }
 
-.squar-grid
+.square-grid
 {
     display: grid;
     grid-template-columns: 54px 54px;
@@ -34,14 +35,7 @@ body
     border: 1px solid #4e4e4e;
     height: 50px;
     width: 50px;
-    /* transition: background-color 0.5s; */
-    /* padding: 10px; */
 }
-
-/* .small-square:hover
-{
-    background-color: #383838;
-} */
 
 .container
 {
@@ -80,12 +74,6 @@ header
     font-size: large;
 }
 
-#create-room
-{
-    padding-left: 110px;
-    padding-right: 110px;
-}
-
 #game-title
 {
     margin-bottom: 50px;
@@ -111,7 +99,8 @@ input
 }
 
 
-.button {
+.button 
+{
 	background-color:transparent;
 	border:1px solid #999999;
 	display:inline-block;
@@ -122,15 +111,109 @@ input
 	padding:10px 36px;
 	text-decoration:none;
 }
-.button:hover {
-	background-color:transparent;
-}
-.button:active {
+
+.button:active 
+{
 	position:relative;
 	top:1px;
 }
 
 #spanA, #spanB, #spanC, #spanD, #spanE, #spanF, #spanG, #spanH, #spanI
 {
+    color: rgb(92, 92, 92);
+}
+
+#random-moves
+{
+    margin-top: 20px;
+    font-weight: bold;
+    font-size: xx-large;
+    text-align: center;
+    color: white;
+    width: 10%;
+    transition: background-color;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    /* display: none; <- Crashes Chrome on hover */
+    -webkit-appearance: none;
+    margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+}
+
+input[type=number] {
+    -moz-appearance:textfield; /* Firefox */
+}
+
+#join-message
+{
+    font-size: large;
+    font-weight: bold;
+}
+
+#logo
+{
+    margin-top: 50px;
+    display: grid;
+    grid-template-columns: 13px 13px;
+    row-gap: 0.5px;
+    justify-content: center;
+}
+
+
+#s1, #s2, #s3, #s4
+{
+    height: 10px;
+    width: 10px;
+    border: 1px solid #7c7c7c;
+    transition: background-color 0.5s, color 0.5s;
+}
+
+#create-room
+{
+    transition: background-color 0.5s, color 0.5s;
+}
+
+#create-room:hover
+{
+    background-color: rgb(252, 79, 79);
     color: rgb(37, 37, 37);
 }
+
+
+#join-room
+{
+    transition: background-color 0.5s, color 0.5s;
+}
+
+#join-room:hover
+{
+    background-color: rgb(3, 83, 151);
+    color: rgb(37, 37, 37);
+}
+
+#room-id
+{
+    width: 300px;
+    text-align: center;
+}
+
+/* #s1:hover
+{
+    background-color: rgb(3, 83, 151);
+}
+
+#s3:hover
+{
+    background-color: rgb(252, 79, 79);
+}
+
+#s2:hover
+{
+    background-color: rgb(3, 83, 151);
+}
+
+#s4:hover
+{
+    background-color: rgb(252, 79, 79);
+} */
