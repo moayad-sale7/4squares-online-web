@@ -1,8 +1,4 @@
-/**
- * todo: some of the variables name need to be changed
- */
 const socket = io();
-
 
 //logo animation
 let logo = anime({
@@ -41,6 +37,7 @@ $('#game').hide();
 $('#room-id').hide();
 $('#random-moves').hide();
 $('#joined-message').hide();
+$('#reset-and-quit').hide();
 
 var playerList = [];
 var playerMap = new Map(); //sore client ID and the room they joined to set each client different color.
@@ -52,12 +49,13 @@ var elementParent = '';
 var bigSquareId = '';  //each for squares are inside one big square and here we are storing the Id for it.
 var nodeOfSquareNumber = '';
 var numberOfClickedSquare = '';
-var spanParentNode = '';
+var nodeOfBigSquare = '';
 var spanParentNodeId = ''
 var nodesLength = ''
 var smallSquaresId = []; //storing the small square ID to turn all the squares into player color when clicked on the last square.
 var nodeIdForClients = [];
 var numberOfSquares = '';
+var resetNumberOfSquaresId = '';
 
 //turn to TRUE if the red take the whole square.
 var redSquares = {
@@ -135,14 +133,14 @@ socket.on('square-clicked', (data)=>
         {
             let playerTurn = anime({
                 targets: '#player-turn',
-                translateX: [{value: 300, duration: 2000}],
+                translateX: [{value: 20, duration: 2000}],
                 easing: 'easeInOutExpo'
             })
             redPlayer = false;
             bluePlayer = true;
             socket.emit('turn-switch', {red: redPlayer, blue: bluePlayer, redId: playerMap.get(roomCode)[0], blueId: playerMap.get(roomCode)[1]});
-            var randomNum = Math.floor(Math.random() * 2) + 1;
-            socket.emit('moves-number', randomNum);
+            let generatedRandomNumber = Math.floor(Math.random() * 2) + 1;
+            socket.emit('moves-number', generatedRandomNumber);
             socket.on('next-move', (randomNum)=>
             {
                 $('#random-moves').val(randomNum);
@@ -150,6 +148,7 @@ socket.on('square-clicked', (data)=>
             });
         }
         $(`#${data.smallSquareId}`).css('background-color', 'rgb(252, 79, 79)');
+        $(`#${data.smallSquareId}`).css("pointer-events", "none");
     }    
     else if((playerMap.get(roomCode)[1] === data.clientsId))
     {
@@ -161,14 +160,14 @@ socket.on('square-clicked', (data)=>
 
             let playerTurn = anime({
                 targets: '#player-turn',
-                translateX: [{value: -300, duration: 2000}],
+                translateX: [{value: -20, duration: 2000}],
                 easing: 'easeInOutExpo'
             })
             redPlayer = true;
             bluePlayer = false;
             socket.emit('turn-switch', {redId: playerMap.get(roomCode)[0], blueId: playerMap.get(roomCode)[1]});
-            var randomNum = Math.floor(Math.random() * 2) + 1;
-            socket.emit('moves-number', randomNum);
+            let generatedRandomNumber = Math.floor(Math.random() * 2) + 1;
+            socket.emit('moves-number', generatedRandomNumber);
             socket.on('next-move', (randomNum)=>
             {
                 $('#random-moves').val(randomNum);
@@ -176,6 +175,7 @@ socket.on('square-clicked', (data)=>
             });
         }
         $(`#${data.smallSquareId}`).css('background-color', 'rgb(3, 83, 151)');
+        $(`#${data.smallSquareId}`).css("pointer-events", "none"); // if the player clicked on small square it will be disabled
     }
 
 
@@ -216,41 +216,34 @@ socket.on('square-clicked', (data)=>
             }
         }
 
-        for(var i= 0; i < data.listOfSmallSquaresId.length; i++)
-            $(`#${data.listOfSmallSquaresId[i]}`).css('background-color', `${lastSquareColor}`);
+        for(const element of data.listOfSmallSquaresId)
+            $(`#${element}`).css('background-color', `${lastSquareColor}`);
 
         var colorWinner = lastSquareColor === 'rgb(3, 83, 151)' ? 'Blue' : 'Red';
 
-        if((blueSquares.squareB && blueSquares.squareA && blueSquares.squareI) || 
+        if(((blueSquares.squareB && blueSquares.squareA && blueSquares.squareI) || 
         (blueSquares.squareC && blueSquares.squareD && blueSquares.squareE) || 
         (blueSquares.squareH && blueSquares.squareG && blueSquares.squareF) ||
         (blueSquares.squareA && blueSquares.squareC && blueSquares.squareF) ||
         (blueSquares.squareB && blueSquares.squareD && blueSquares.squareG) ||
         (blueSquares.squareI && blueSquares.squareE && blueSquares.squareH) ||
         (blueSquares.squareI && blueSquares.squareD && blueSquares.squareF) ||
-        (blueSquares.squareA && blueSquares.squareD && blueSquares.squareH))
-        {
-            $('#winner').text(`${colorWinner} is the winner`);
-            $('#winner').css('color', `${lastSquareColor}`);
-            $('#random-moves').hide();
-            $('#game').css("pointer-events", "none");
-            $('.4s-logo').css('background-color', `${lastSquareColor}`);
-        }
-        
-        else if((redSquares.squareB && redSquares.squareA && redSquares.squareI) || 
+        (blueSquares.squareA && blueSquares.squareD && blueSquares.squareH)) || //
+        ((redSquares.squareB && redSquares.squareA && redSquares.squareI) || 
         (redSquares.squareC && redSquares.squareD && redSquares.squareE) || 
         (redSquares.squareH && redSquares.squareG && redSquares.squareF) ||
         (redSquares.squareA && redSquares.squareC && redSquares.squareF) ||
         (redSquares.squareB && redSquares.squareD && redSquares.squareG) ||
         (redSquares.squareI && redSquares.squareE && redSquares.squareH) ||
         (redSquares.squareI && redSquares.squareD && redSquares.squareF) ||
-        (redSquares.squareA && redSquares.squareD && redSquares.squareH))
+        (redSquares.squareA && redSquares.squareD && redSquares.squareH)))
         {
             $('#winner').text(`${colorWinner} is the winner`);
             $('#winner').css('color', `${lastSquareColor}`);
             $('#random-moves').hide();
             $('#game').css("pointer-events", "none");
             $('.4s-logo').css('background-color', `${lastSquareColor}`);
+            $('#reset-and-quit').show();
         }
     }
 });
@@ -272,23 +265,21 @@ $('.small-square').one('click', (event)=>
             $('#game').css("pointer-events", "auto");    
     });
 
-    //! NAME NEED TO CHANGE
     let smallSquareId = event.target.id;
     elementParent = event.target.parentNode;
     bigSquareId = elementParent.id;
     nodeOfSquareNumber = elementParent.childNodes[9];
-    spanParentNode = nodeOfSquareNumber.parentNode;
-    spanParentNodeId = spanParentNode.id;
+    nodeOfBigSquare = nodeOfSquareNumber.parentNode;
     let numberOfSquaresId = nodeOfSquareNumber.id;
     numberOfClickedSquare = nodeOfSquareNumber.innerText;
     var totalOfSquareNumber = $(`#${numberOfSquaresId}`).text();
 
     socket.emit('click-number', {ncs: numberOfClickedSquare, sId: numberOfSquaresId}); //passing the number 
 
-    nodesLength = spanParentNode.childNodes.length;
+    nodesLength = nodeOfBigSquare.childNodes.length;
     for(var i = 0; i < nodesLength; i++)
-        if(spanParentNode.childNodes[i].id != null)
-            smallSquaresId.push(spanParentNode.childNodes[i].id);
+        if(nodeOfBigSquare.childNodes[i].id != null)
+            smallSquaresId.push(nodeOfBigSquare.childNodes[i].id);
     /**
      * 1- we passing the id of the square that the player clicked on it "smallSquareId".
      * 2- and we passing the total number of squares "totalOfSquareNumber", After we pass it to the server. 
@@ -327,7 +318,7 @@ socket.on('client-joined', (data)=>
         $('#random-moves').css('background-color', 'rgb(252, 79, 79)');
         let playerTurn = anime({
             targets: '#player-turn',
-            translateX: [{value: -300, duration: 2000}],
+            translateX: [{value: -20, duration: 2000}],
             easing: 'easeInOutExpo'
         })
     }
@@ -345,7 +336,68 @@ function codeGenerator(length)
     var charactersLength = characters.length;
     for (var i = 0; i < length; i++) 
     {
-      result += characters.charAt(Math.floor(Math.random() * charactersLength));
+        result += characters.charAt(Math.floor(Math.random() * charactersLength));
     }
     return result;
 }
+
+
+$('#quit').click(()=>
+{ 
+    window.location.reload();
+});
+
+$('#reset').click(()=>
+{ 
+    //number of small squares in each big square
+    let resetNumberOfSquares = 4;
+    socket.emit('reset',{resetNumberOfSquares: resetNumberOfSquares, bigSquaresStatus: false});
+});
+
+socket.on('game-reset', (data)=>
+{
+    const listNumberOfSquares = ['spanA', 'spanB', 'spanC', 'spanD', 'spanE', 'spanF', 'spanG', 'spanH', 'spanI'];
+
+    const listSmallSquareId = ['a1', 'a2', 'a3', 'a4', 'b1', 'b2', 'b3', 'b4', 'c1', 'c2', 'c3', 'c4', 
+                            'd1', 'd2', 'd3', 'd4', 'e1', 'e2', 'e3', 'e4', 'f1','f2','f3','f4', 
+                            'g1', 'g2', 'g3', 'g4', 'h1', 'h2','h3','h4', 'i1', 'i2', 'i3', 'i4'];
+    
+    for(const idSS of listSmallSquareId)
+    {
+        $(`#${idSS}`).css('background-color', '');
+        $(`#${idSS}`).css("pointer-events", "auto");
+    }
+
+    for(const id of listNumberOfSquares)
+        $(`#${id}`).text(data.resetNumberOfSquares);
+    
+    blueSquares.squareA = data.bigSquaresStatus;
+    blueSquares.squareB = data.bigSquaresStatus;
+    blueSquares.squareC = data.bigSquaresStatus;
+    blueSquares.squareD = data.bigSquaresStatus;
+    blueSquares.squareE = data.bigSquaresStatus;
+    blueSquares.squareF = data.bigSquaresStatus;
+    blueSquares.squareG = data.bigSquaresStatus;
+    blueSquares.squareH = data.bigSquaresStatus;
+    blueSquares.squareI = data.bigSquaresStatus;
+
+    redSquares.squareA = data.bigSquaresStatus;
+    redSquares.squareB = data.bigSquaresStatus;
+    redSquares.squareC = data.bigSquaresStatus;
+    redSquares.squareD = data.bigSquaresStatus;
+    redSquares.squareE = data.bigSquaresStatus;
+    redSquares.squareF = data.bigSquaresStatus;
+    redSquares.squareG = data.bigSquaresStatus;
+    redSquares.squareH = data.bigSquaresStatus;
+    redSquares.squareI = data.bigSquaresStatus;
+
+    console.log(blueSquares);
+
+    $('#random-moves').show();
+    $('#winner').text('');
+    $('#game').css("pointer-events", "auto");
+    $('.4s-logo').css('background-color', '');
+
+    $('#reset').hide();
+    $('#quit').hide();
+})

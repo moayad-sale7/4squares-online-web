@@ -16,9 +16,7 @@ io.on('connection', socket=>
     socket.on('joined-room', (roomCode)=>
     {
 
-        gRoom = roomCode;
         socket.join(roomCode);
-        //socket.emit('square-click', {smallSquareId: smallSquareId, totalOfSquareNumber: totalOfSquareNumber, listOfSmallSquaresId: smallSquaresId.slice(0, 4)}); 
         socket.on('square-click', (data)=> 
         {
             io.to(roomCode).emit('square-clicked', {smallSquareId: data.smallSquareId, totalOfSquareNumber: data.totalOfSquareNumber,
@@ -31,9 +29,14 @@ io.on('connection', socket=>
 
         socket.on('moves-number', (randomNum)=>
         {
-            moves = randomNum;
             io.to(roomCode).emit('next-move', randomNum);
         })
+
+        socket.on('reset', (data)=>
+        {
+            io.to(roomCode).emit('game-reset', data);
+        });
+
     });
 
 
